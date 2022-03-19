@@ -10,3 +10,8 @@ This project is made for university work. Theme is automatization of pharmacy. I
 - migrations - db migration for project
 - docs - any kind of API or description of project
 - elk - docker-compose file with setup elk stack. Just for fun
+
+Tasks:
+- [ ] Think about client error handling
+- [ ] Add Jaeger and OpenTracing
+- [x] Check :)
