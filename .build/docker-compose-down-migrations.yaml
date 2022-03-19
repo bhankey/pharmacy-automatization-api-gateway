@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  migrations_down:
+    container_name: migrations_down
+    image: migrate/migrate
+    restart: on-failure
+    volumes:
+        - ./migrations:/database
+    command:
+        [ "-path", "/database", "-database", "postgres://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-postgres}@postgres:5432/${DB_NAME:-postgres}?sslmode=disable", "${MIGRATIONS_STATUS:-up}", "-all"]
+
+volumes:
+  mysql:
+  redis:

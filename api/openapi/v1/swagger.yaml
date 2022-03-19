@@ -1,0 +1,660 @@
+swagger: "2.0"
+info:
+  description: Pharmacy
+  title: Pharmacy
+  version: 1.0.0
+schemes:
+  - http
+tags:
+  - name: pharmacy
+    description: 'All logic with pharmacy'
+  - name: user
+    description: 'User can do it with him self'
+  - name: purchase
+    description: 'Only for apothecary. Works with sales'
+  - name: auth
+    description: 'JWT Authentication. Works with tokens'
+
+
+securityDefinitions:
+  JWT:
+    type: apiKey
+    in: header
+    name: Authorization
+
+paths:
+  /auth/login:
+    post:
+      tags:
+        - auth
+      parameters:
+        - in: body
+          name: body
+          schema:
+            $ref: '#/definitions/UserLoginRequest'
+      responses:
+        200:
+          description: login success
+          schema:
+            $ref: '#/definitions/BaseResponse'
+        401:
+          description: failed to authorize
+          schema:
+            $ref: '#/definitions/BaseResponse'
+        500:
+          description: internal server error
+          schema:
+            $ref: '#/definitions/BaseResponse'
+
+  /auth/refresh:
+    post:
+      tags:
+        - auth
+      parameters:
+        - in: body
+          name: body
+          schema:
+            $ref: '#/definitions/UserRefreshRequest'
+      responses:
+        200:
+          description: refresh success
+          schema:
+            $ref: '#/definitions/BaseResponse'
+        401:
+          description: failed to refresh
+          schema:
+            $ref: '#/definitions/BaseResponse'
+        500:
+          description: internal server error
+          schema:
+            $ref: '#/definitions/BaseResponse'
+
+  /user/register:
+    post:
+      tags:
+        - user
+      security:
+        - JWT: [ ]
+      parameters:
+        - in: body
+          name: body
+          schema:
+            $ref: '#/definitions/RegisterRequest'
+      responses:
+        200:
+          description: ok
+          schema:
+            $ref: '#/definitions/BaseResponse'
+        401:
+          description: failed
+          schema:
+            $ref: '#/definitions/BaseResponse'
+        500:
+          description: internal server error
+          schema:
+            $ref: '#/definitions/BaseResponse'
+
+  /user/request_to_change_password:
+    post:
+      tags:
+        - user
+      parameters:
+        - in: body
+          name: body
+          schema:
+            $ref: '#/definitions/RequestPasswordChangeRequest'
+      responses:
+        200:
+          description: ok
+          schema:
+            $ref: '#/definitions/BaseResponse'
+        401:
+          description: failed
+          schema:
+            $ref: '#/definitions/BaseResponse'
+        500:
+          description: internal server error
+          schema:
+            $ref: '#/definitions/BaseResponse'
+
+  /user/change_password:
+    post:
+      tags:
+        - user
+      parameters:
+        - in: body
+          name: body
+          schema:
+            $ref: '#/definitions/PasswordChangeRequest'
+      responses:
+        200:
+          description: ok
+          schema:
+            $ref: '#/definitions/BaseResponse'
+        401:
+          description: failed
+          schema:
+            $ref: '#/definitions/BaseResponse'
+        500:
+          description: internal server error
+          schema:
+            $ref: '#/definitions/BaseResponse'
+
+  /user/all:
+    get:
+      tags:
+        - user
+      security:
+        - JWT: [ ]
+      parameters:
+        - in: query
+          name: last_id
+          type: integer
+          required: true
+          default: 0
+        - in: query
+          name: limit
+          type: integer
+          required: false
+          default: 100
+          minimum: 0
+          maximum: 5000
+      responses:
+        200:
+          description: ok
+          schema:
+            $ref: '#/definitions/UserAllResponse'
+        401:
+          description: failed
+          schema:
+            $ref: '#/definitions/BaseResponse'
+        500:
+          description: internal server error
+          schema:
+            $ref: '#/definitions/BaseResponse'
+
+  /user/update:
+    post:
+      tags:
+        - user
+      security:
+        - JWT: [ ]
+      parameters:
+        - in: body
+          name: body
+          schema:
+            required:
+              - user_id
+              - user
+            type: object
+            properties:
+              user:
+                $ref: '#/definitions/User'
+      responses:
+        200:
+          description: ok
+          schema:
+            $ref: '#/definitions/BaseResponse'
+        401:
+          description: failed
+          schema:
+            $ref: '#/definitions/BaseResponse'
+        500:
+          description: internal server error
+          schema:
+            $ref: '#/definitions/BaseResponse'
+
+  /pharmacy/create:
+    post:
+      tags:
+        - pharmacy
+      security:
+        - JWT: [ ]
+      parameters:
+        - in: body
+          name: body
+          schema:
+            $ref: '#/definitions/Pharmacy'
+      responses:
+        200:
+          description: ok
+          schema:
+            $ref: '#/definitions/BaseResponse'
+        401:
+          description: failed
+          schema:
+            $ref: '#/definitions/BaseResponse'
+        500:
+          description: internal server error
+          schema:
+            $ref: '#/definitions/BaseResponse'
+
+  /pharmacy/all:
+    get:
+      tags:
+        - pharmacy
+      security:
+        - JWT: []
+      parameters:
+        - in: query
+          name: last_id
+          type: integer
+          required: true
+          default: 0
+        - in: query
+          name: limit
+          type: integer
+          required: false
+          default: 100
+          minimum: 0
+          maximum: 5000
+      responses:
+        200:
+          description: ok
+          schema:
+            $ref: '#/definitions/PharmacyGetAllResponse'
+        401:
+          description: failed
+          schema:
+            $ref: '#/definitions/BaseResponse'
+        500:
+          description: internal server error
+          schema:
+            $ref: '#/definitions/BaseResponse'
+  /pharmacy/users: # TODO 2
+    get:
+      tags:
+        - pharmacy
+      security:
+        - JWT: [ ]
+      parameters:
+        - in: query
+          name: pharmacy_id
+          type: integer
+          required: true
+      responses:
+        200:
+          description: ok
+          schema:
+            $ref: '#/definitions/PharmacyUsersResponse'
+        401:
+          description: failed
+          schema:
+            $ref: '#/definitions/BaseResponse'
+        500:
+          description: internal server error
+          schema:
+            $ref: '#/definitions/BaseResponse'
+
+  /products/get_available_by_user_pharmacy:
+    get:
+      tags:
+        - pharmacy
+      security:
+        - JWT: [ ]
+      responses:
+        200:
+          description: ok
+          schema:
+            $ref: '#/definitions/PharmacyGetAllProductsResponse'
+        401:
+          description: failed
+          schema:
+            $ref: '#/definitions/BaseResponse'
+        500:
+          description: internal server error
+          schema:
+            $ref: '#/definitions/BaseResponse'
+
+  /products/add_to_reservation: # TODO ADD idempotence. Use websocket with this endpoint
+    post:
+      tags:
+        - purchase
+      security:
+        - JWT: [ ]
+      parameters:
+        - in: body
+          name: body
+          schema:
+            $ref: '#/definitions/PurchaseAddRequest'
+      responses:
+        200:
+          description: ok
+          schema:
+            $ref: '#/definitions/BaseResponse'
+        401:
+          description: failed
+          schema:
+            $ref: '#/definitions/BaseResponse'
+        500:
+          description: internal server error
+          schema:
+            $ref: '#/definitions/BaseResponse'
+
+  /products/show_reservation:
+    get:
+      tags:
+        - purchase
+      security:
+        - JWT: [ ]
+      parameters:
+        - in: query
+          name: purchase_uuid
+          type: string
+          format: uuid
+
+        - in: query
+          name: is_social_card
+          type: boolean
+      responses:
+        200:
+          description: ok
+          schema:
+            $ref: '#/definitions/PurchaseShowResponse'
+        401:
+          description: failed
+          schema:
+            $ref: '#/definitions/BaseResponse'
+        500:
+          description: internal server error
+          schema:
+            $ref: '#/definitions/BaseResponse'
+
+  /purchase/confirm_purchase:
+    post:
+      tags:
+        - purchase
+      security:
+        - JWT: [ ]
+      parameters:
+        - in: body
+          name: body
+          schema:
+            $ref: '#/definitions/PurchaseConfirmRequest'
+      responses:
+        200:
+          description: ok
+          schema:
+            $ref: '#/definitions/BaseResponse'
+        401:
+          description: failed
+          schema:
+            $ref: '#/definitions/BaseResponse'
+        500:
+          description: internal server error
+          schema:
+            $ref: '#/definitions/BaseResponse'
+
+definitions:
+  BaseResponse:
+    type: object
+    properties:
+      error:
+        type: string
+        x-omitempty: false
+      success:
+        type: boolean
+        x-omitempty: false
+
+  UserLoginRequest:
+    type: object
+    required:
+      - email
+      - password
+    properties:
+      email:
+        type: string
+        format: email
+      password:
+        type: string
+        minLength: 8
+
+  UserRefreshRequest:
+    type: object
+    required:
+      - token
+    properties:
+      token:
+        type: string
+
+  RegisterRequest:
+    type: object
+    required:
+      - email
+      - password
+      - role
+    properties:
+      name:
+        type: string
+      surname:
+        type: string
+      email:
+        type: string
+        format: email
+      password:
+        type: string
+        minLength: 8
+      default_pharmacy_id:
+        type: integer
+      role:
+        type: string
+
+
+  RequestPasswordChangeRequest:
+    type: object
+    required:
+      - email
+    properties:
+      email:
+        type: string
+        format: email
+
+  PasswordChangeRequest:
+    type: object
+    required:
+      - email
+      - code
+      - new_password
+    properties:
+      email:
+        type: string
+        format: email
+      code:
+        type: string
+      new_password:
+        type: string
+        minLength: 8
+
+  PharmacyGetAllResponse:
+    type: object
+    properties:
+      pharmacys:
+        type: array
+        x-nullable: false
+        x-omitempty: false
+        items:
+          $ref: '#/definitions/Pharmacy'
+          x-omitempty: false
+
+  Pharmacy:
+    type: object
+    properties:
+        id:
+          type: integer
+          x-omitempty: false
+          x-nullable: false
+        name:
+          type: string
+          x-omitempty: false
+          x-nullable: false
+        address:
+          $ref: '#/definitions/Address'
+          x-omitempty: false
+          x-nullable: false
+
+  Address:
+    type: object
+    properties:
+      city:
+        type: string
+        x-omitempty: false
+        x-nullable: false
+      street:
+        type: string
+        x-omitempty: false
+        x-nullable: false
+      house:
+        type: string
+        x-omitempty: false
+        x-nullable: false
+
+  PharmacyBlockRequest:
+    type: object
+    properties:
+      pharmacy_name:
+        type: string
+        x-omitempty: false
+
+  UserBlockRequest:
+    type: object
+    properties:
+      email:
+        type: string
+        x-omitempty: false
+
+  PharmacyGetAllProductsResponse:
+    type: object
+    properties:
+      products:
+        type: array
+        items:
+          $ref: '#/definitions/Product'
+
+  Product:
+    type: object
+    properties:
+      name:
+        type: string
+      price:
+        type: integer
+      count:
+        type: integer
+      position:
+        type: string
+      need_recepi:
+        type: boolean
+
+  ProductWithID:
+    type: object
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+      price:
+        type: integer
+      count:
+        type: integer
+      position:
+        type: string
+      need_recepi:
+        type: boolean
+
+  PharmacyComplaintsResponse:
+    type: array
+    items:
+      $ref: "#/definitions/Complaint"
+
+  Complaint:
+    type: object
+    properties:
+      name:
+        type: string
+      email:
+        type: string
+        format: email
+      complaint:
+        type: string
+      worker_name:
+        type: string
+
+  PharmacyUsersResponse:
+    type: array
+    items:
+      $ref: '#/definitions/User'
+
+  UserAllResponse:
+    type: array
+    x-nullable: false
+    items:
+      $ref: '#/definitions/User'
+      x-nullable: false
+      x-omitempty: false
+
+  User:
+    type: object
+    properties:
+      id:
+        type: integer
+        x-nullable: false
+        x-omitempty: false
+      name:
+        type: string
+        x-nullable: false
+        x-omitempty: false
+      surname:
+        type: string
+        x-nullable: false
+        x-omitempty: false
+      email:
+        type: string
+        format: email
+        x-nullable: false
+        x-omitempty: false
+      default_pharmacy_id:
+        type: integer
+        x-nullable: false
+        x-omitempty: false
+      role:
+        type: string
+        x-nullable: false
+        x-omitempty: false
+        enum:
+          - 'admin'
+          - 'apothecary'
+
+  PurchaseAddRequest:
+    type: object
+    properties:
+      product_name:
+        type: string
+      position:
+        type: string
+      purchase_uuid:
+        type: string
+
+  PurchaseShowResponse:
+    type: object
+    properties:
+      items:
+        type: array
+        items:
+          type: object
+          properties:
+            name:
+              type: string
+            count:
+              type: integer
+            price:
+              type: integer
+      price:
+        type: integer
+
+  PurchaseConfirmRequest:
+    type: object
+    properties:
+      is_social_card:
+        type: boolean
+      purchase_uuid:
+        type: string
+        format: uuid

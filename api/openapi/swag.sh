@@ -1,0 +1,1 @@
+swagger generate model -f ./docs/openapi/v1/swagger.yaml -m ./internal/delivery/http/v1/models

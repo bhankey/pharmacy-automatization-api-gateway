@@ -1,0 +1,23 @@
+server:
+  port: 9005
+  write_timeout: 15
+  read_timeout: 15
+  idle_timeout: 60
+postgres:
+  host: "localhost"
+  port: 5432
+  user: "postgres"
+  password: "postgres"
+  db_name: "postgres"
+redis:
+  host: "localhost"
+  port: 6379
+  password: "redis"
+logger:
+  path: "./logs/logs.log"
+  level: 6
+secure:
+  jwt_key: "someSecureKey"
+services:
+  user:
+    addr: "127.0.0.1:8005"
