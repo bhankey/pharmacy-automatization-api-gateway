@@ -13,7 +13,8 @@ type Container struct {
 	redisConnection  *redis.Client
 	logger           logger.Logger
 
-	userServiceConn *grpc.ClientConn
+	userServiceConn     *grpc.ClientConn
+	pharmacyServiceConn *grpc.ClientConn
 
 	jwtKey          string
 	smtpMessageFrom string
@@ -26,16 +27,17 @@ func NewContainer(
 	masterPostgres, slavePostgres *sqlx.DB,
 	redis *redis.Client,
 	jwtKey string,
-	userServiceConn *grpc.ClientConn,
+	userServiceConn, pharmacyServiceConn *grpc.ClientConn,
 ) *Container {
 	return &Container{
-		masterPostgresDB: masterPostgres,
-		slavePostgresDB:  slavePostgres,
-		redisConnection:  redis,
-		logger:           log,
-		userServiceConn:  userServiceConn,
-		jwtKey:           jwtKey,
-		dependencies:     make(map[string]interface{}),
+		masterPostgresDB:    masterPostgres,
+		slavePostgresDB:     slavePostgres,
+		redisConnection:     redis,
+		logger:              log,
+		userServiceConn:     userServiceConn,
+		pharmacyServiceConn: pharmacyServiceConn,
+		jwtKey:              jwtKey,
+		dependencies:        make(map[string]interface{}),
 	}
 }
 

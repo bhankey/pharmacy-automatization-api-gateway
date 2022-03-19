@@ -41,6 +41,9 @@ type Config struct {
 		User struct {
 			Addr string `yaml:"addr" env:"USER_SERVICE_ADDR"`
 		}
+		Pharmacy struct {
+			Addr string `yaml:"addr" env:"PHARMACY_SERVICE_ADDR"`
+		}
 	}
 }
 

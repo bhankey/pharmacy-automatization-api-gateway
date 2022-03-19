@@ -34,6 +34,8 @@ github.com/beorn7/perks v0.0.0-20180321164747-3a771d992973/go.mod h1:Dwedo/Wpr24
 github.com/beorn7/perks v1.0.0/go.mod h1:KWe93zE9D1o94FZ5RNwFwVgaQK1VOXiVxmqh+CedLV8=
 github.com/beorn7/perks v1.0.1/go.mod h1:G2ZrVWU2WbWT9wwq4/hrbKbnv/1ERSJQ0ibhJ6rlkpw=
 github.com/bgentry/speakeasy v0.1.0/go.mod h1:+zsyZBPWlz7T6j88CTgSN5bM796AkVf0kBD4zp0CCIs=
+github.com/bhankey/pharmacy-automatization-pharmacy v0.0.3 h1:lvTv58NzdNvnZHyrT8ozldV22/2AKZCSHL0QKRwRvLk=
+github.com/bhankey/pharmacy-automatization-pharmacy v0.0.3/go.mod h1:N4Cp7i82WDQGndGhXfCKzPnC7tua2TAVS50FXUtb97M=
 github.com/bhankey/pharmacy-automatization-user v1.0.1 h1:yrP7MPkguy6s5YVZOUoasVg1cnuYdH42ef9xuHT6gmU=
 github.com/bhankey/pharmacy-automatization-user v1.0.1/go.mod h1:1FTuykMrDrypP8dYWqwAZKnFtZwH1Ee3xa/EVp/T+0A=
 github.com/casbin/casbin/v2 v2.1.2/go.mod h1:YcPU1XXisHhLzuxH9coDNf2FbKpjGlbCg3n9yuLkIJQ=

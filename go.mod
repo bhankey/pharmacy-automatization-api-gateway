@@ -3,7 +3,8 @@ module github.com/bhankey/pharmacy-automatization-api-gateway
 go 1.18
 
 require (
-	github.com/bhankey/pharmacy-automatization-user v1.0.1
+	github.com/bhankey/pharmacy-automatization-pharmacy v0.0.3
+	github.com/bhankey/pharmacy-automatization-user v0.0.1
 	github.com/go-chi/chi/v5 v5.0.7
 	github.com/go-chi/cors v1.2.0
 	github.com/go-openapi/errors v0.20.2

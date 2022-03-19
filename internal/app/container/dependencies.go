@@ -2,14 +2,18 @@ package container
 
 import (
 	"github.com/bhankey/pharmacy-automatization-api-gateway/internal/adapter/repository/tokenrepo"
+	"github.com/bhankey/pharmacy-automatization-api-gateway/internal/adapter/webapi/pharmacy"
 	"github.com/bhankey/pharmacy-automatization-api-gateway/internal/adapter/webapi/user"
 	"github.com/bhankey/pharmacy-automatization-api-gateway/internal/delivery/http"
 	"github.com/bhankey/pharmacy-automatization-api-gateway/internal/delivery/http/middleware"
 	"github.com/bhankey/pharmacy-automatization-api-gateway/internal/delivery/http/v1/authhandler"
+	"github.com/bhankey/pharmacy-automatization-api-gateway/internal/delivery/http/v1/pharmacyhandler"
 	"github.com/bhankey/pharmacy-automatization-api-gateway/internal/delivery/http/v1/swaggerhandler"
 	"github.com/bhankey/pharmacy-automatization-api-gateway/internal/delivery/http/v1/userhandler"
 	"github.com/bhankey/pharmacy-automatization-api-gateway/internal/service/authservice"
+	"github.com/bhankey/pharmacy-automatization-api-gateway/internal/service/pharmacyservice"
 	"github.com/bhankey/pharmacy-automatization-api-gateway/internal/service/userservice"
+	"github.com/bhankey/pharmacy-automatization-pharmacy/pkg/api/pharmacyproto"
 	pb "github.com/bhankey/pharmacy-automatization-user/pkg/api/userservice"
 )
 
@@ -61,6 +65,24 @@ func (c *Container) GetV1UserHandler() *userhandler.UserHandler {
 	}
 
 	typedDependency := userhandler.NewUserHandler(c.getBaseHandler(), c.getUserSrv(), c.GetAuthMiddleware())
+
+	c.dependencies[key] = typedDependency
+
+	return typedDependency
+}
+
+func (c *Container) GetV1PharmacyHandler() *pharmacyhandler.Handler {
+	const key = "V1PharmacyHandler"
+
+	dependency, ok := c.dependencies[key]
+	if ok {
+		typedDependency, ok := dependency.(*pharmacyhandler.Handler)
+		if ok {
+			return typedDependency
+		}
+	}
+
+	typedDependency := pharmacyhandler.NewPharmacyHandler(c.getBaseHandler(), c.getPharmacySrv(), c.GetAuthMiddleware())
 
 	c.dependencies[key] = typedDependency
 
@@ -163,6 +185,42 @@ func (c *Container) getUserAdapter() *user.APIClient {
 	return typedDependency
 }
 
+func (c *Container) getPharmacySrv() *pharmacyservice.Service {
+	const key = "PharmacySrv"
+
+	dependency, ok := c.dependencies[key]
+	if ok {
+		typedDependency, ok := dependency.(*pharmacyservice.Service)
+		if ok {
+			return typedDependency
+		}
+	}
+
+	typedDependency := pharmacyservice.NewPharmacyService(c.getPharmacyAdapter())
+
+	c.dependencies[key] = typedDependency
+
+	return typedDependency
+}
+
+func (c *Container) getPharmacyAdapter() *pharmacy.APIClient {
+	const key = "PharmacyAdapter"
+
+	dependency, ok := c.dependencies[key]
+	if ok {
+		typedDependency, ok := dependency.(*pharmacy.APIClient)
+		if ok {
+			return typedDependency
+		}
+	}
+
+	typedDependency := pharmacy.NewPharmacyAPIClient(c.getPharmacyServiceAPIClient())
+
+	c.dependencies[key] = typedDependency
+
+	return typedDependency
+}
+
 func (c *Container) getUserServiceAPIClient() pb.UserServiceClient {
 	const key = "UserServiceAPIClient"
 
@@ -175,6 +233,24 @@ func (c *Container) getUserServiceAPIClient() pb.UserServiceClient {
 	}
 
 	typedDependency := pb.NewUserServiceClient(c.userServiceConn)
+
+	c.dependencies[key] = typedDependency
+
+	return typedDependency
+}
+
+func (c *Container) getPharmacyServiceAPIClient() pharmacyproto.PharmacyServiceClient {
+	const key = "PharmacyServiceAPIClient"
+
+	dependency, ok := c.dependencies[key]
+	if ok {
+		typedDependency, ok := dependency.(pharmacyproto.PharmacyServiceClient)
+		if ok {
+			return typedDependency
+		}
+	}
+
+	typedDependency := pharmacyproto.NewPharmacyServiceClient(c.pharmacyServiceConn)
 
 	c.dependencies[key] = typedDependency
 

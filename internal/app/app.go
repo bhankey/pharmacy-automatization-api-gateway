@@ -49,6 +49,7 @@ func NewApp(configPath string) (*App, error) {
 	}
 
 	userServiceConn, err := grpc.Dial(config.Services.User.Addr, opts...)
+	pharmacyServiceConn, err := grpc.Dial(config.Services.Pharmacy.Addr, opts...)
 
 	dependencies := container.NewContainer(
 		log,
@@ -56,7 +57,7 @@ func NewApp(configPath string) (*App, error) {
 		dataSources.db,
 		dataSources.redisClient,
 		config.Secure.JwtKey,
-		userServiceConn,
+		userServiceConn, pharmacyServiceConn,
 	)
 
 	mainRouter := chi.NewRouter()
@@ -70,6 +71,7 @@ func NewApp(configPath string) (*App, error) {
 		dependencies.GetV1SwaggerHandler(),
 		dependencies.GetV1AuthHandler(),
 		dependencies.GetV1UserHandler(),
+		dependencies.GetV1PharmacyHandler(),
 	)
 
 	mainRouter.Mount("/v1", v1Router)
