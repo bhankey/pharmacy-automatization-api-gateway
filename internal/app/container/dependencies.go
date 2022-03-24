@@ -221,6 +221,7 @@ func (c *Container) getPharmacyAdapter() *pharmacy.APIClient {
 	return typedDependency
 }
 
+// nolint: ireturn, nolintlint
 func (c *Container) getUserServiceAPIClient() pb.UserServiceClient {
 	const key = "UserServiceAPIClient"
 
@@ -239,6 +240,7 @@ func (c *Container) getUserServiceAPIClient() pb.UserServiceClient {
 	return typedDependency
 }
 
+// nolint: ireturn, nolintlint
 func (c *Container) getPharmacyServiceAPIClient() pharmacyproto.PharmacyServiceClient {
 	const key = "PharmacyServiceAPIClient"
 

@@ -6,10 +6,10 @@ import (
 	"errors"
 	"net/http"
 
-	"github.com/bhankey/pharmacy-automatization-api-gateway/internal/apperror"
+	"github.com/bhankey/go-utils/pkg/apperror"
+	"github.com/bhankey/go-utils/pkg/logger"
 	"github.com/bhankey/pharmacy-automatization-api-gateway/internal/delivery/http/v1/models"
 	"github.com/bhankey/pharmacy-automatization-api-gateway/internal/entities"
-	"github.com/bhankey/pharmacy-automatization-api-gateway/pkg/logger"
 	"github.com/sirupsen/logrus"
 )
 
@@ -35,7 +35,7 @@ func (h *BaseHandler) WriteErrorResponse(ctx context.Context, w http.ResponseWri
 
 	var clientError apperror.ClientError
 	if errors.As(err, &clientError) {
-		w.WriteHeader(clientError.Code)
+		w.WriteHeader(clientError.GetHTTPCode())
 		resp = models.BaseResponse{
 			Error:   clientError.Message,
 			Success: false,

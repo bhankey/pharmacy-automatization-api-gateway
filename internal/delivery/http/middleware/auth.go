@@ -4,8 +4,8 @@ import (
 	"context"
 	"net/http"
 
+	"github.com/bhankey/go-utils/pkg/logger"
 	"github.com/bhankey/pharmacy-automatization-api-gateway/internal/entities"
-	"github.com/bhankey/pharmacy-automatization-api-gateway/pkg/logger"
 	"github.com/golang-jwt/jwt/v4"
 )
 

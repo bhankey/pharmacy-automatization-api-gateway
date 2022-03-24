@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"github.com/bhankey/pharmacy-automatization-api-gateway/internal/apperror"
+	"github.com/bhankey/go-utils/pkg/apperror"
 	deliveryhttp "github.com/bhankey/pharmacy-automatization-api-gateway/internal/delivery/http"
 	"github.com/bhankey/pharmacy-automatization-api-gateway/internal/delivery/http/v1/models"
 	"github.com/bhankey/pharmacy-automatization-api-gateway/internal/entities"

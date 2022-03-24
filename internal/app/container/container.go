@@ -1,7 +1,7 @@
 package container
 
 import (
-	"github.com/bhankey/pharmacy-automatization-api-gateway/pkg/logger"
+	"github.com/bhankey/go-utils/pkg/logger"
 	"github.com/go-redis/redis/v8"
 	"github.com/jmoiron/sqlx"
 	"google.golang.org/grpc"
@@ -16,8 +16,7 @@ type Container struct {
 	userServiceConn     *grpc.ClientConn
 	pharmacyServiceConn *grpc.ClientConn
 
-	jwtKey          string
-	smtpMessageFrom string
+	jwtKey string
 
 	dependencies map[string]interface{}
 }

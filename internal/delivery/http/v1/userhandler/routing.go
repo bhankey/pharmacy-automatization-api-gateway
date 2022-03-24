@@ -2,10 +2,10 @@ package userhandler
 
 import (
 	"context"
+
 	deliveryhttp "github.com/bhankey/pharmacy-automatization-api-gateway/internal/delivery/http"
 	"github.com/bhankey/pharmacy-automatization-api-gateway/internal/delivery/http/middleware"
 	"github.com/bhankey/pharmacy-automatization-api-gateway/internal/entities"
-
 	"github.com/go-chi/chi/v5"
 )
 

@@ -3,6 +3,7 @@ package pharmacyservice
 import (
 	"context"
 	"fmt"
+
 	"github.com/bhankey/pharmacy-automatization-api-gateway/internal/entities"
 )
 

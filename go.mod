@@ -3,6 +3,7 @@ module github.com/bhankey/pharmacy-automatization-api-gateway
 go 1.18
 
 require (
+	github.com/bhankey/go-utils v0.0.1
 	github.com/bhankey/pharmacy-automatization-pharmacy v0.0.3
 	github.com/bhankey/pharmacy-automatization-user v0.0.1
 	github.com/go-chi/chi/v5 v5.0.7
@@ -17,8 +18,8 @@ require (
 	github.com/jackc/pgx/v4 v4.12.0
 	github.com/jmoiron/sqlx v1.3.4
 	github.com/joho/godotenv v1.3.0
-	github.com/pborman/uuid v1.2.0
-	github.com/sirupsen/logrus v1.4.2
+	github.com/pborman/uuid v1.2.1
+	github.com/sirupsen/logrus v1.8.1
 	google.golang.org/grpc v1.45.0
 )
 
@@ -46,7 +47,6 @@ require (
 	github.com/jackc/pgservicefile v0.0.0-20200714003250-2b9c44734f2b // indirect
 	github.com/jackc/pgtype v1.8.0 // indirect
 	github.com/josharian/intern v1.0.0 // indirect
-	github.com/konsorten/go-windows-terminal-sequences v1.0.2 // indirect
 	github.com/mailru/easyjson v0.7.7 // indirect
 	github.com/mitchellh/mapstructure v1.4.3 // indirect
 	github.com/oklog/ulid v1.3.1 // indirect

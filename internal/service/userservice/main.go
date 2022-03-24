@@ -2,6 +2,7 @@ package userservice
 
 import (
 	"context"
+
 	"github.com/bhankey/pharmacy-automatization-api-gateway/internal/entities"
 )
 

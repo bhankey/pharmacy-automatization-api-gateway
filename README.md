@@ -12,6 +12,6 @@ This project is made for university work. Theme is automatization of pharmacy. I
 - elk - docker-compose file with setup elk stack. Just for fun
 
 Tasks:
-- [ ] Think about client error handling
+- [x] Think about client error handling
 - [ ] Add Jaeger and OpenTracing
-- [x] Check :)
+- [ ] Add OAuth2.0

@@ -3,6 +3,7 @@ package userservice
 import (
 	"context"
 	"fmt"
+
 	"github.com/bhankey/pharmacy-automatization-api-gateway/internal/entities"
 )
 
@@ -56,4 +57,3 @@ func (s *UserService) RequestToResetPassword(ctx context.Context, email string) 
 
 	return nil
 }
-
